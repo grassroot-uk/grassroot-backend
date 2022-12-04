@@ -1,0 +1,179 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Auth {
+  """JWT access token"""
+  accessToken: JWT!
+
+  """JWT refresh token"""
+  refreshToken: JWT!
+  user: User!
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+type Contract {
+  """Address of the contract"""
+  address: String!
+
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+
+  """Description of the contract"""
+  description: String!
+  id: ID!
+
+  """Metadata of Contract"""
+  metadata: JSON!
+
+  """Name of the contract"""
+  name: String!
+
+  """Network Name"""
+  networkName: String!
+
+  """Transaction hash of Contract Deployment"""
+  transactionHash: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+}
+
+input CreateContractInput {
+  """Address of the contract"""
+  address: String!
+
+  """Description of the contract"""
+  description: String!
+
+  """Metadata of Contract"""
+  metadata: JSON!
+
+  """Name of the contract"""
+  name: String!
+
+  """Network Name"""
+  networkName: String!
+
+  """Transaction hash of Contract Deployment"""
+  transactionHash: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type File {
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+  id: ID!
+  imageUrl: String!
+  metadataUrl: String!
+  name: String!
+  ownerId: String!
+  resolver: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+  uploadedIPFS: Boolean!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+"""
+A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
+"""
+scalar JWT
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  changePassword(data: ChangePasswordInput!): User!
+  createContract(createContractInput: CreateContractInput!): Contract!
+  login(data: LoginInput!): Auth!
+  refreshToken(token: JWT!): Token!
+  removeContract(id: Int!): Contract!
+  signup(data: SignupInput!): Auth!
+  updateContract(updateContractInput: UpdateContractInput!): Contract!
+  updateUser(data: UpdateUserInput!): User!
+}
+
+type Query {
+  contract(id: Int!): Contract!
+  contracts: [Contract!]!
+  hello(name: String!): String!
+  helloWorld: String!
+  me: User!
+}
+
+"""User role"""
+enum Role {
+  ADMIN
+  USER
+}
+
+input SignupInput {
+  email: String!
+  firstname: String
+  lastname: String
+  password: String!
+}
+
+type Token {
+  """JWT access token"""
+  accessToken: JWT!
+
+  """JWT refresh token"""
+  refreshToken: JWT!
+}
+
+input UpdateContractInput {
+  """Address of the contract"""
+  address: String
+
+  """Description of the contract"""
+  description: String
+  id: Int!
+
+  """Metadata of Contract"""
+  metadata: JSON
+
+  """Name of the contract"""
+  name: String
+
+  """Network Name"""
+  networkName: String
+
+  """Transaction hash of Contract Deployment"""
+  transactionHash: String
+}
+
+input UpdateUserInput {
+  firstname: String
+  lastname: String
+}
+
+type User {
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+  email: String!
+  files: [File!]
+  firstname: String
+  id: ID!
+  lastname: String
+  role: Role!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+}
