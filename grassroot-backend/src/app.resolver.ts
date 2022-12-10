@@ -1,13 +1,10 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 
 @Resolver()
 export class AppResolver {
-  @Query(() => String)
-  helloWorld(): string {
-    return 'Hello World!';
+  @Mutation(() => String)
+  getNonce(address: String): string {
+    return "nonce";
   }
-  @Query(() => String)
-  hello(@Args('name') name: string): string {
-    return `Hello ${name}!`;
-  }
+  
 }

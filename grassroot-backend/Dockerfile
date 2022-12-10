@@ -1,4 +1,4 @@
-FROM node:16 AS builder
+FROM node:18 AS builder
 
 # Create app directory
 WORKDIR /app
@@ -8,13 +8,14 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 # Install app dependencies
+RUN npm install pm2 -g
 RUN npm install
 
 COPY . .
 
 RUN npm run build
 
-FROM node:16
+FROM node:18
 
 WORKDIR /app
 

@@ -12,32 +12,77 @@ generator dbml {
   provider = "prisma-dbml-generator"
 }
 
+model DAO {
+  id                String     @id @default(cuid())
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  name              String
+  description       String
+  adminAddress      String
+  adminId           String
+  admin             User?      @relation(name: "admin", fields: [adminId], references: [id])
+  profilePicture    String
+  backgroundPicture String?
+  resources         File[]
+  categories        Category[] @relation("category")
+  subCategories     Category[] @relation("subcategory")
+  tags              Tag[]      @relation("tags")
+  metadata          Json?
+  participants      String[] /// UserIds
+  files             String[] /// FileIds
+  activeCampaigns   Campaign[]
+  socials           Social[]
+}
+
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  password  String
-  firstname String?
-  lastname  String?
-  files     File[]
-  role      Role
+  id            String     @id @default(cuid())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  email         String?    @unique
+  address       String     @unique
+  nonce         String
+  firstname     String?
+  lastname      String?
+  about         String?
+  socials       Social[]
+  files         File[]
+  adminOf       DAO[]      @relation("admin")
+  participantOf Json[]
+  categories    Category[]
+  tags          Tag[]
+  role          Role
 }
 
 model File {
-  id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  uploadedIPFS  Boolean   @default(true)
-  name          String
-  owner         User?     @relation(fields: [ownerId], references: [id])
-  ownerId       String?
-  metadataUrl   String?
-  metadataCid   String?
-  imageUrl      String?
-  imageCid      String?
-  metadata      Json?
-  resolver      String?
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  uploadedIPFS Boolean  @default(true)
+  name         String
+  owner        User?    @relation(fields: [ownerId], references: [id])
+  ownerId      String?
+  dao          DAO?     @relation(fields: [daoId], references: [id])
+  daoId        String?
+  metadataUrl  String?
+  metadataCid  String?
+  imageUrl     String?
+  imageCid     String?
+  metadata     Json?
+  resolver     String?
+}
+
+model Social {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  icon      String
+  url       String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  daoId     String?
+  dao       DAO?     @relation(fields: [daoId], references: [id])
+  Other     Json?
 }
 
 // model Contract {
@@ -45,6 +90,76 @@ model File {
 //   createdAt     DateTime  @default(now())
 //   updatedAt     DateTime  @updatedAt
 // }
+
+model Campaign {
+  id                   String     @id @default(cuid())
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  title                 String
+  subtitle             String
+  campaignId           Int
+  transactionHash      String
+  category             Category[] @relation("campaignCategory")
+  subCategory          Category[] @relation("campaignSubCategory")
+  images               String[]
+  videos               String[]
+  tokenCurrency        String
+  tokenCurrencyAddress String
+  minAmount            BigInt
+  goalAmount           BigInt
+  completionDate       BigInt
+  country              String
+  city                 String
+  state                String
+  metadata             Json?
+  daoId                String
+  dao                  DAO        @relation(fields: [daoId], references: [id])
+  categoryId           String?
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ownerId   String
+  owner     User?    @relation(fields: [ownerId], references: [id])
+  name      String
+  daoId     String?
+  dao       DAO?     @relation(name: "tags", fields: [daoId], references: [id])
+}
+
+model Category {
+  id                    String    @id @default(cuid())
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  ownerId               String
+  owner                 User?     @relation(fields: [ownerId], references: [id])
+  name                  String
+  daoId                 String?
+  dao                   DAO?      @relation(name: "category", fields: [daoId], references: [id])
+  daoIdSub              String?
+  daoSub                DAO?      @relation(name: "subcategory", fields: [daoIdSub], references: [id])
+  campaignCategoryId    String?   @unique
+  campaignCategory      Campaign? @relation(name: "campaignCategory", fields: [campaignCategoryId], references: [id])
+  campaignSubCategoryId String?   @unique
+  campaignSubCategory   Campaign? @relation(name: "campaignSubCategory", fields: [campaignSubCategoryId], references: [id])
+
+  type TypeCategory @default(CATEGORY)
+}
+
+
+model PendingNonce {
+  id                    String    @id @default(cuid())
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  address               String?   @unique
+  nonce                 String
+}
+
+enum TypeCategory {
+  CATEGORY
+  SUBCATEGORY
+}
 
 enum Role {
   ADMIN

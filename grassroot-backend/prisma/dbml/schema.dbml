@@ -2,15 +2,44 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
+Table DAO {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  name String [not null]
+  description String [not null]
+  adminAddress String [not null]
+  adminId String [not null]
+  admin User
+  profilePicture String [not null]
+  backgroundPicture String
+  resources File [not null]
+  categories Category [not null]
+  subCategories Category [not null]
+  tags Tag [not null]
+  metadata Json
+  participants String[] [not null, note: 'UserIds']
+  files String[] [not null, note: 'FileIds']
+  activeCampaigns Campaign [not null]
+  socials Social [not null]
+}
+
 Table User {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
-  email String [unique, not null]
-  password String [not null]
+  email String [unique]
+  address String [unique, not null]
+  nonce String [not null]
   firstname String
   lastname String
+  about String
+  socials Social [not null]
   files File [not null]
+  adminOf DAO [not null]
+  participantOf Json[] [not null]
+  categories Category [not null]
+  tags Tag [not null]
   role Role [not null]
 }
 
@@ -22,6 +51,8 @@ Table File {
   name String [not null]
   owner User
   ownerId String
+  dao DAO
+  daoId String
   metadataUrl String
   metadataCid String
   imageUrl String
@@ -30,9 +61,115 @@ Table File {
   resolver String
 }
 
+Table Social {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  name String [not null]
+  icon String [not null]
+  url String [not null]
+  user User
+  userId String
+  daoId String
+  dao DAO
+  Other Json
+}
+
+Table Campaign {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  title String [not null]
+  subtitle String [not null]
+  campaignId Int [not null]
+  transactionHash String [not null]
+  category Category [not null]
+  subCategory Category [not null]
+  images String[] [not null]
+  videos String[] [not null]
+  tokenCurrency String [not null]
+  tokenCurrencyAddress String [not null]
+  minAmount BigInt [not null]
+  goalAmount BigInt [not null]
+  completionDate BigInt [not null]
+  country String [not null]
+  city String [not null]
+  state String [not null]
+  metadata Json
+  daoId String [not null]
+  dao DAO [not null]
+  categoryId String
+}
+
+Table Tag {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  ownerId String [not null]
+  owner User
+  name String [not null]
+  daoId String
+  dao DAO
+}
+
+Table Category {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  ownerId String [not null]
+  owner User
+  name String [not null]
+  daoId String
+  dao DAO
+  daoIdSub String
+  daoSub DAO
+  campaignCategoryId String [unique]
+  campaignCategory Campaign
+  campaignSubCategoryId String [unique]
+  campaignSubCategory Campaign
+  type TypeCategory [not null, default: 'CATEGORY']
+}
+
+Table PendingNonce {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  address String [unique]
+  nonce String [not null]
+}
+
+Enum TypeCategory {
+  CATEGORY
+  SUBCATEGORY
+}
+
 Enum Role {
   ADMIN
   USER
 }
 
+Ref: DAO.adminId > User.id
+
 Ref: File.ownerId > User.id
+
+Ref: File.daoId > DAO.id
+
+Ref: Social.userId > User.id
+
+Ref: Social.daoId > DAO.id
+
+Ref: Campaign.daoId > DAO.id
+
+Ref: Tag.ownerId > User.id
+
+Ref: Tag.daoId > DAO.id
+
+Ref: Category.ownerId > User.id
+
+Ref: Category.daoId > DAO.id
+
+Ref: Category.daoIdSub > DAO.id
+
+Ref: Category.campaignCategoryId > Campaign.id
+
+Ref: Category.campaignSubCategoryId > Campaign.id

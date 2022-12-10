@@ -17,6 +17,23 @@ export class CreateContractInput {
   @IsNotEmpty()
   networkName: string;
 
+  @Field(() => String, {description: "Network Slug"})
+  @IsNotEmpty()
+  networkSlug: string;
+
+
+  @Field(() => String, {description: "Network Slug"})
+  @IsNotEmpty()
+  rpcUrl: string;
+
+  @Field(() => String, {description: "Network Slug"})
+  @IsNotEmpty()
+  rpcUrlws: string;
+
+  @Field(() => Number, {description: "Network Slug"})
+  @IsNotEmpty()
+  chainId: number;
+
   @Field(() => String, {description: "Address of the contract"})
   @IsNotEmpty()
   address: string;

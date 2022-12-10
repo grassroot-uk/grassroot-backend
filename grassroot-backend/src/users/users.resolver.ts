@@ -37,17 +37,17 @@ export class UsersResolver {
     return this.usersService.updateUser(user.id, newUserData);
   }
 
-  @UseGuards(GqlAuthGuard)
-  @Mutation(() => User)
-  async changePassword(
-    @UserEntity() user: User,
-    @Args('data') changePassword: ChangePasswordInput
-  ) {
-    return this.usersService.changePassword(
-      user.id,
-      user.password,
-      changePassword
-    );
-  }
+  // @UseGuards(GqlAuthGuard)
+  // @Mutation(() => User)
+  // async changePassword(
+  //   @UserEntity() user: User,
+  //   @Args('data') changePassword: ChangePasswordInput
+  // ) {
+  //   return this.usersService.changePassword(
+  //     user.id,
+  //     user.password,
+  //     changePassword
+  //   );
+  // }
 
 }

@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
 import { ConfigService } from '@nestjs/config';
-import { PasswordService } from './password.service';
+import { SignatureService } from './signature.service';
 
-describe('PasswordService', () => {
-  let service: PasswordService;
+describe('signatureService', () => {
+  let service: SignatureService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PasswordService, PrismaService, ConfigService],
+      providers: [SignatureService, PrismaService, ConfigService],
     }).compile();
 
-    service = module.get<PasswordService>(PasswordService);
+    service = module.get<SignatureService>(SignatureService);
   });
 
   it('should be defined', () => {

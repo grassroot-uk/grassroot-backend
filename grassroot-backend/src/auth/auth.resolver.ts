@@ -12,14 +12,24 @@ import { LoginInput } from './dto/login.input';
 import { SignupInput } from './dto/signup.input';
 import { RefreshTokenInput } from './dto/refresh-token.input';
 import { User } from 'src/users/models/user.model';
+import { GenerateNonce } from './dto/nonce.input';
+import { Nonce } from './models/nonce.model';
+import { Logger } from '@nestjs/common';
 
 @Resolver(() => Auth)
 export class AuthResolver {
   constructor(private readonly auth: AuthService) {}
 
+  @Mutation(() => Nonce)
+  async generateNonce(@Args('data') data: GenerateNonce) {
+    return await this.auth.createNonce(data);
+  }
+
   @Mutation(() => Auth)
   async signup(@Args('data') data: SignupInput) {
-    data.email = data.email.toLowerCase();
+    if (data.email) {
+      data.email = data?.email.toLowerCase();
+    }
     const { accessToken, refreshToken } = await this.auth.createUser(data);
     return {
       accessToken,

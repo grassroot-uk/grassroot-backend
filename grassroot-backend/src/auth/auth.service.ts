@@ -1,38 +1,134 @@
 import { PrismaService } from 'nestjs-prisma';
 import { Prisma, User } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Injectable,
   NotFoundException,
   BadRequestException,
   ConflictException,
   UnauthorizedException,
+  Logger,
+  HttpException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PasswordService } from './password.service';
 import { SignupInput } from './dto/signup.input';
 import { Token } from './models/token.model';
 import { SecurityConfig } from 'src/common/configs/config.interface';
+import { GenerateNonce } from './dto/nonce.input';
+import { Nonce } from './models/nonce.model';
+import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
+import { SignatureService } from './signature.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
-    private readonly passwordService: PasswordService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly signatureService: SignatureService
   ) {}
 
-  async createUser(payload: SignupInput): Promise<Token> {
-    const hashedPassword = await this.passwordService.hashPassword(
-      payload.password
-    );
+  async createNonce(payload: GenerateNonce): Promise<Nonce> {
+    // Push Address -> Nonce Into the PendingNonce Table.
+    const newNonce = uuidv4();
 
     try {
+      // const pendingNonce = await this.prisma.pendingNonce.upsert({
+      //   where: {
+      //     address: payload.address,
+      //   },
+      //   create: {
+      //     nonce: newNonce,
+      //     address: payload.address,
+      //   },
+      //   update: {
+      //     nonce: newNonce,
+      //   },
+      // });
+
+      const existing = await this.prisma.pendingNonce.findFirst({
+        where: {
+          address: payload.address,
+        },
+      });
+
+      if (existing) {
+        return {
+          ...existing,
+          success: true,
+        };
+      }
+
+      const newCreated = await this.prisma.pendingNonce.create({
+        data: {
+          nonce: newNonce,
+          address: payload.address,
+        },
+      });
+
+      return { ...newCreated, success: true };
+    } catch (e) {
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code === 'P2002'
+      ) {
+        throw new ConflictException(
+          `Address ${payload.address} is alredy created.`
+        );
+      }
+      throw new Error(e);
+    }
+  }
+
+  async createUser(payload: SignupInput): Promise<Token> {
+    try {
+      const isUser = await this.prisma.user.findFirst({
+        where: {
+          address: payload.address,
+        },
+      });
+
+      if (isUser) {
+
+        const signatureValid = this.signatureService.validateSignature(
+          this.formatMessage(isUser.nonce),
+          payload.signature,
+          isUser.address
+        );
+  
+        if (!signatureValid) {
+          throw new HttpErrorByCode[403]('Not a valid Signature!!');
+        }
+
+        return this.generateTokens({
+          userId: isUser.id,
+        });
+      }
+
+      // Get the nonce from the pendingNonce Table.
+      const pendingNonce = await this.prisma.pendingNonce.findFirst({
+        where: {
+          address: payload.address,
+        },
+      });
+
+      const signatureValid = this.signatureService.validateSignature(
+        this.formatMessage(pendingNonce.nonce),
+        payload.signature,
+        pendingNonce.address
+      );
+
+      if (!signatureValid) {
+        throw new HttpErrorByCode[403]('Not a valid Signature!!');
+      }
+
+      const { signature: _, ...creatUser } = payload;
+
       const user = await this.prisma.user.create({
         data: {
-          ...payload,
-          password: hashedPassword,
+          ...creatUser,
+          nonce: pendingNonce.nonce,
           role: 'USER',
         },
       });
@@ -45,7 +141,7 @@ export class AuthService {
         e instanceof Prisma.PrismaClientKnownRequestError &&
         e.code === 'P2002'
       ) {
-        throw new ConflictException(`Email ${payload.email} already used.`);
+        throw new ConflictException(`User ${payload.address} already created.`);
       }
       throw new Error(e);
     }
@@ -58,18 +154,18 @@ export class AuthService {
       throw new NotFoundException(`No user found for email: ${email}`);
     }
 
-    const passwordValid = await this.passwordService.validatePassword(
-      password,
-      user.password
-    );
-
-    if (!passwordValid) {
-      throw new BadRequestException('Invalid password');
-    }
+    // Check Signature
+    // Flow is like this
+    // Get the nonce from user.nonce
+    // Verify it against signature supplied and return jwt
 
     return this.generateTokens({
       userId: user.id,
     });
+  }
+
+  private formatMessage(nonce: string) {
+    return `You are signing to login into Grassroot: ${nonce}`;
   }
 
   validateUser(userId: string): Promise<User> {

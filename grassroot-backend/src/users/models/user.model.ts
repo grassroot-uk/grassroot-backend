@@ -30,9 +30,12 @@ export class User extends BaseModel {
   @Field(() => Role)
   role: Role;
 
+  @Field(() => String)
+  address: string;
+
   @Field(() => [File], { nullable: true })
   files?: [File] | null;
 
-  @HideField()
-  password: string;
+  @Field(() => [String], { nullable: true })
+  categories: string;
 }

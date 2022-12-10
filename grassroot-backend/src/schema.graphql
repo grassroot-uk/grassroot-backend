@@ -11,11 +11,6 @@ type Auth {
   user: User!
 }
 
-input ChangePasswordInput {
-  newPassword: String!
-  oldPassword: String!
-}
-
 type Contract {
   """Address of the contract"""
   address: String!
@@ -47,6 +42,9 @@ input CreateContractInput {
   """Address of the contract"""
   address: String!
 
+  """Network Slug"""
+  chainId: Int!
+
   """Description of the contract"""
   description: String!
 
@@ -58,6 +56,15 @@ input CreateContractInput {
 
   """Network Name"""
   networkName: String!
+
+  """Network Slug"""
+  networkSlug: String!
+
+  """Network Slug"""
+  rpcUrl: String!
+
+  """Network Slug"""
+  rpcUrlws: String!
 
   """Transaction hash of Contract Deployment"""
   transactionHash: String!
@@ -83,6 +90,10 @@ type File {
   uploadedIPFS: Boolean!
 }
 
+input GenerateNonce {
+  address: String!
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -99,8 +110,9 @@ input LoginInput {
 }
 
 type Mutation {
-  changePassword(data: ChangePasswordInput!): User!
   createContract(createContractInput: CreateContractInput!): Contract!
+  generateNonce(data: GenerateNonce!): Nonce!
+  getNonce: String!
   login(data: LoginInput!): Auth!
   refreshToken(token: JWT!): Token!
   removeContract(id: Int!): Contract!
@@ -109,11 +121,27 @@ type Mutation {
   updateUser(data: UpdateUserInput!): User!
 }
 
+type Nonce {
+  """Address for Nonce"""
+  address: String!
+
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+  id: ID!
+
+  """Nonce"""
+  nonce: String!
+
+  """Success of Nonce Generation"""
+  success: Boolean!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+}
+
 type Query {
   contract(id: Int!): Contract!
   contracts: [Contract!]!
-  hello(name: String!): String!
-  helloWorld: String!
   me: User!
 }
 
@@ -124,10 +152,11 @@ enum Role {
 }
 
 input SignupInput {
-  email: String!
+  address: String!
+  email: String
   firstname: String
   lastname: String
-  password: String!
+  signature: String!
 }
 
 type Token {
@@ -142,6 +171,9 @@ input UpdateContractInput {
   """Address of the contract"""
   address: String
 
+  """Network Slug"""
+  chainId: Int
+
   """Description of the contract"""
   description: String
   id: Int!
@@ -155,6 +187,15 @@ input UpdateContractInput {
   """Network Name"""
   networkName: String
 
+  """Network Slug"""
+  networkSlug: String
+
+  """Network Slug"""
+  rpcUrl: String
+
+  """Network Slug"""
+  rpcUrlws: String
+
   """Transaction hash of Contract Deployment"""
   transactionHash: String
 }
@@ -165,6 +206,9 @@ input UpdateUserInput {
 }
 
 type User {
+  address: String!
+  categories: [String!]
+
   """Identifies the date and time when the object was created."""
   createdAt: DateTime!
   email: String!
