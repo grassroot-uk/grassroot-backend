@@ -8,7 +8,6 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 # Install app dependencies
-RUN npm install pm2 -g
 RUN npm install
 
 COPY . .
