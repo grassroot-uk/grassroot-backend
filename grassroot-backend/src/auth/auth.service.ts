@@ -81,7 +81,7 @@ export class AuthService {
     }
   }
 
-  async createUser(payload: SignupInput): Promise<Token> {
+  async createUserOrLogin(payload: SignupInput): Promise<Token> {
     try {
       const isUser = await this.prisma.user.findFirst({
         where: {
@@ -143,25 +143,9 @@ export class AuthService {
       ) {
         throw new ConflictException(`User ${payload.address} already created.`);
       }
+      Logger.log(e);
       throw new Error(e);
     }
-  }
-
-  async login(email: string, password: string): Promise<Token> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
-
-    if (!user) {
-      throw new NotFoundException(`No user found for email: ${email}`);
-    }
-
-    // Check Signature
-    // Flow is like this
-    // Get the nonce from user.nonce
-    // Verify it against signature supplied and return jwt
-
-    return this.generateTokens({
-      userId: user.id,
-    });
   }
 
   private formatMessage(nonce: string) {

@@ -10,17 +10,20 @@ import {
   UploadedFile,
   ParseFilePipeBuilder,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
   @Post('upload')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   upload(
     @Body() data: CreateFileDto,
@@ -43,6 +46,7 @@ export class FilesController {
   }
 
   @Post('uploadImage')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   uploadOnly(
     @UploadedFile(
@@ -74,12 +78,13 @@ export class FilesController {
   }
 
   @Patch(':fileId')
+  @UseGuards(JwtAuthGuard)
   update(@Param('fileId') fileId: string, @Body() updateFileDto: UpdateFileDto) {
     return this.filesService.update(fileId, updateFileDto);
   }
 
-  @Delete(':fileId')
-  remove(@Param('fileId') fileId: string) {
-    return this.filesService.remove(fileId);
-  }
+  // @Delete(':fileId')
+  // remove(@Param('fileId') fileId: string) {
+  //   return this.filesService.remove(fileId);
+  // }
 }

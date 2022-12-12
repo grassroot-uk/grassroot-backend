@@ -34,7 +34,7 @@ async function bootstrap() {
     const options = new DocumentBuilder()
       .setTitle(swaggerConfig.title || 'Grassroot APIs')
       .setDescription(swaggerConfig.description || 'Grassroot APIs to support platform Grassroot.')
-      .setVersion(swaggerConfig.version || '1.0')
+      .setVersion(swaggerConfig.version || '0.1')
       .build();
     const document = SwaggerModule.createDocument(app, options);
 

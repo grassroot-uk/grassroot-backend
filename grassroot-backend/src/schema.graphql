@@ -104,19 +104,12 @@ A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
 """
 scalar JWT
 
-input LoginInput {
-  email: String!
-  password: String!
-}
-
 type Mutation {
   createContract(createContractInput: CreateContractInput!): Contract!
   generateNonce(data: GenerateNonce!): Nonce!
-  getNonce: String!
-  login(data: LoginInput!): Auth!
   refreshToken(token: JWT!): Token!
   removeContract(id: Int!): Contract!
-  signup(data: SignupInput!): Auth!
+  signupOrLogin(data: SignupInput!): Auth!
   updateContract(updateContractInput: UpdateContractInput!): Contract!
   updateUser(data: UpdateUserInput!): User!
 }

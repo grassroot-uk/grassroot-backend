@@ -26,24 +26,11 @@ export class AuthResolver {
   }
 
   @Mutation(() => Auth)
-  async signup(@Args('data') data: SignupInput) {
+  async signupOrLogin(@Args('data') data: SignupInput) {
     if (data.email) {
       data.email = data?.email.toLowerCase();
     }
-    const { accessToken, refreshToken } = await this.auth.createUser(data);
-    return {
-      accessToken,
-      refreshToken,
-    };
-  }
-
-  @Mutation(() => Auth)
-  async login(@Args('data') { email, password }: LoginInput) {
-    const { accessToken, refreshToken } = await this.auth.login(
-      email.toLowerCase(),
-      password
-    );
-
+    const { accessToken, refreshToken } = await this.auth.createUserOrLogin(data);
     return {
       accessToken,
       refreshToken,
