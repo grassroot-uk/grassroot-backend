@@ -66,6 +66,25 @@ export class FilesController {
   ) {
     return this.filesService.UploadOne(file);
   }
+
+  @Post('uploadImage')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addMaxSizeValidator
+        ({
+          maxSize: 1000*1000, // 1MiB
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        })
+    )
+    file: Express.Multer.File
+  ) {
+    return this.filesService.UploadOne(file);
+  }
  
   @Get()
   findAll() {

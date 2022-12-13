@@ -87,6 +87,29 @@ export class FilesService {
     });
   }
 
+  async UploadOneFile(
+    file: Express.Multer.File
+  ) {
+    
+    const uploadFile = new File([file.buffer], file.originalname, {
+      type: file.mimetype,
+    });
+    const cid = await this.web3Service.uploadFile(uploadFile);
+
+    const DEFAULT_RESOLVER = 'ipfs.w3s.link';
+
+    // Store a new File in db
+    return this.prisma.file.create({
+      data: {
+        name: file.originalname,
+        resolver: DEFAULT_RESOLVER,
+        imageUrl: `https://${cid}.${DEFAULT_RESOLVER}/${file.originalname}`,
+        uploadedIPFS: true,
+        metadataCid: cid
+      },
+    });
+  }
+
   findAll() {
     return this.prisma.file.findMany();
   }
