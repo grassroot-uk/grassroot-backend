@@ -14,6 +14,7 @@ import { GqlConfigService } from './gql-config.service';
 import { ContractsModule } from './contracts/contracts.module';
 import { FilesModule } from './files/files.module';
 import { Web3Module } from './web3/web3.module';
+import { DaoModule } from './dao/dao.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { Web3Module } from './web3/web3.module';
     ContractsModule,
     FilesModule,
     Web3Module,
+    DaoModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

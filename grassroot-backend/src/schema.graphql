@@ -70,6 +70,16 @@ input CreateContractInput {
   transactionHash: String!
 }
 
+input CreateDaoInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Dao {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -106,11 +116,13 @@ scalar JWT
 
 type Mutation {
   createContract(createContractInput: CreateContractInput!): Contract!
+  createDao(createDaoInput: CreateDaoInput!): Dao!
   generateNonce(data: GenerateNonce!): Nonce!
   refreshToken(token: JWT!): Token!
   removeContract(id: Int!): Contract!
   signupOrLogin(data: SignupInput!): Auth!
   updateContract(updateContractInput: UpdateContractInput!): Contract!
+  updateDao(updateDaoInput: UpdateDaoInput!): Dao!
   updateUser(data: UpdateUserInput!): User!
 }
 
@@ -135,6 +147,7 @@ type Nonce {
 type Query {
   contract(id: Int!): Contract!
   contracts: [Contract!]!
+  dao(id: Int!): Dao!
   me: User!
 }
 
@@ -191,6 +204,12 @@ input UpdateContractInput {
 
   """Transaction hash of Contract Deployment"""
   transactionHash: String
+}
+
+input UpdateDaoInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateUserInput {
