@@ -103,7 +103,7 @@ export class FilesService {
       data: {
         name: file.originalname,
         resolver: DEFAULT_RESOLVER,
-        imageUrl: `https://${cid}.${DEFAULT_RESOLVER}/${file.originalname}`,
+        metadataUrl: `https://${cid}.${DEFAULT_RESOLVER}/${file.originalname}`,
         uploadedIPFS: true,
         metadataCid: cid
       },

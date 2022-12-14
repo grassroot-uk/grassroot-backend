@@ -67,7 +67,7 @@ export class FilesController {
     return this.filesService.UploadOne(file);
   }
 
-  @Post('uploadImage')
+  @Post('uploadFile')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
@@ -83,7 +83,7 @@ export class FilesController {
     )
     file: Express.Multer.File
   ) {
-    return this.filesService.UploadOne(file);
+    return this.filesService.UploadOneFile(file);
   }
  
   @Get()
