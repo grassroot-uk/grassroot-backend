@@ -71,13 +71,46 @@ input CreateContractInput {
 }
 
 input CreateDaoInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Url to the Background Picture for the DAO."""
+  backgroundPicture: String!
+
+  """Description of the DAO."""
+  description: String!
+
+  """Metadata JSON to the DAO"""
+  metadata: JSON!
+
+  """Name of the DAO."""
+  name: String!
+
+  """Url to the Profile Picture for the DAO."""
+  profilePicture: String!
 }
 
 type Dao {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """DAO admin address."""
+  adminAddress: String!
+
+  """DAO admin Id."""
+  adminId: String!
+
+  """Url to the Background Picture for the DAO."""
+  backgroundPicture: String!
+
+  """Description of the DAO."""
+  description: String!
+
+  """Id for the DAO"""
+  id: String!
+
+  """Any Metadata for DAO"""
+  metadata: JSON!
+
+  """Name of the DAO."""
+  name: String!
+
+  """Url to the Profile Picture for the DAO."""
+  profilePicture: String!
 }
 
 """
@@ -147,8 +180,10 @@ type Nonce {
 type Query {
   contract(id: Int!): Contract!
   contracts: [Contract!]!
-  dao(id: Int!): Dao!
+  daoById(id: String!): Dao
+  daos: [Dao!]!
   me: User!
+  myDaos: [Dao!]!
 }
 
 """User role"""
@@ -207,9 +242,23 @@ input UpdateContractInput {
 }
 
 input UpdateDaoInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """Url to the Background Picture for the DAO."""
+  backgroundPicture: String
+
+  """Description of the DAO."""
+  description: String
+
+  """Id of the string"""
+  id: String!
+
+  """Metadata JSON to the DAO"""
+  metadata: JSON
+
+  """Name of the DAO."""
+  name: String
+
+  """Url to the Profile Picture for the DAO."""
+  profilePicture: String
 }
 
 input UpdateUserInput {

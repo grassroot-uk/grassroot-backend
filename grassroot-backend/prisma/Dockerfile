@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:18
 RUN openssl version -v
 RUN uname -a
 RUN echo $DATABASE_URL
