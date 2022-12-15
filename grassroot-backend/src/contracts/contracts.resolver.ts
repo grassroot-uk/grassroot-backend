@@ -27,9 +27,4 @@ export class ContractsResolver {
   updateContract(@Args('updateContractInput') updateContractInput: UpdateContractInput) {
     return this.contractsService.update(updateContractInput.id, updateContractInput);
   }
-
-  @Mutation(() => Contract)
-  removeContract(@Args('id', { type: () => Int }) id: number) {
-    return this.contractsService.remove(id);
-  }
 }

@@ -15,6 +15,7 @@ import { ContractsModule } from './contracts/contracts.module';
 import { FilesModule } from './files/files.module';
 import { Web3Module } from './web3/web3.module';
 import { DaoModule } from './dao/dao.module';
+import { CampaignModule } from './campaign/campaign.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { DaoModule } from './dao/dao.module';
     FilesModule,
     Web3Module,
     DaoModule,
+    CampaignModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

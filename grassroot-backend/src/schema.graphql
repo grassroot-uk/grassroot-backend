@@ -11,6 +11,61 @@ type Auth {
   user: User!
 }
 
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+type Campaign {
+  """City to the campaign"""
+  city: String!
+
+  """Completion unix timeStamp to the Campaign"""
+  completionDate: BigInt!
+
+  """Country to the campaign"""
+  country: String!
+
+  """DAO Id to which this campaign is under."""
+  daoId: String!
+
+  """Total Goal Amount to the Campaign"""
+  goalAmount: BigInt!
+
+  """Id of the Campaign"""
+  id: String!
+
+  """Images to the Campaign"""
+  images: [String!]!
+
+  """Country to the campaign"""
+  metadata: JSON!
+
+  """Minimum Contribution amount to the Campaign"""
+  minAmount: BigInt!
+
+  """State to the campaign"""
+  state: String!
+
+  """Subtitle of the Campaign"""
+  subtitle: String!
+
+  """Title of the Campaign"""
+  title: String!
+
+  """Token denomination name of the token."""
+  tokenCurrency: String!
+
+  """Token Address of the token."""
+  tokenCurrencyAddress: String!
+
+  """Transaction Hash on which Campaign is created."""
+  transactionHash: String!
+
+  """Videos to the Campaign"""
+  videos: [String!]!
+}
+
 type Contract {
   """Address of the contract"""
   address: String!
@@ -36,6 +91,11 @@ type Contract {
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: DateTime!
+}
+
+input CreateCampaignInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 input CreateContractInput {
@@ -148,12 +208,13 @@ A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
 scalar JWT
 
 type Mutation {
+  createCampaign(createCampaignInput: CreateCampaignInput!, daoId: String!): Campaign!
   createContract(createContractInput: CreateContractInput!): Contract!
   createDao(createDaoInput: CreateDaoInput!): Dao!
   generateNonce(data: GenerateNonce!): Nonce!
   refreshToken(token: JWT!): Token!
-  removeContract(id: Int!): Contract!
   signupOrLogin(data: SignupInput!): Auth!
+  updateCampaign(updateCampaignInput: UpdateCampaignInput!): Campaign!
   updateContract(updateContractInput: UpdateContractInput!): Contract!
   updateDao(updateDaoInput: UpdateDaoInput!): Dao!
   updateUser(data: UpdateUserInput!): User!
@@ -178,6 +239,7 @@ type Nonce {
 }
 
 type Query {
+  campaign(id: Int!): Campaign!
   contract(id: Int!): Contract!
   contracts: [Contract!]!
   daoById(id: String!): Dao
@@ -206,6 +268,12 @@ type Token {
 
   """JWT refresh token"""
   refreshToken: JWT!
+}
+
+input UpdateCampaignInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateContractInput {
