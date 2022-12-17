@@ -11,17 +11,12 @@ type Auth {
   user: User!
 }
 
-"""
-The `BigInt` scalar type represents non-fractional signed whole numeric values.
-"""
-scalar BigInt
-
 type Campaign {
   """City to the campaign"""
   city: String!
 
   """Completion unix timeStamp to the Campaign"""
-  completionDate: BigInt!
+  completionDate: String!
 
   """Country to the campaign"""
   country: String!
@@ -33,7 +28,7 @@ type Campaign {
   daoId: String!
 
   """Total Goal Amount to the Campaign"""
-  goalAmount: BigInt!
+  goalAmount: String!
 
   """Id of the Campaign"""
   id: String!
@@ -45,7 +40,7 @@ type Campaign {
   metadata: JSON!
 
   """Minimum Contribution amount to the Campaign"""
-  minAmount: BigInt!
+  minAmount: String!
 
   """State to the campaign"""
   state: String!

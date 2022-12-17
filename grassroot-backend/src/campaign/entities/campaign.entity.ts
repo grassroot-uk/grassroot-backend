@@ -28,14 +28,14 @@ export class Campaign {
   @Field(() => String, {description: 'Token Address of the token.'})
   tokenCurrencyAddress: string;
 
-  @Field(() => GraphQLBigInt, {description: 'Minimum Contribution amount to the Campaign'})
-  minAmount: typeof GraphQLBigInt
+  @Field(() => String, {description: 'Minimum Contribution amount to the Campaign'})
+  minAmount: string
 
-  @Field(() => GraphQLBigInt, {description: 'Total Goal Amount to the Campaign'})
-  goalAmount: typeof GraphQLBigInt
+  @Field(() => String, {description: 'Total Goal Amount to the Campaign'})
+  goalAmount: string
 
-  @Field(() => GraphQLBigInt, {description: 'Completion unix timeStamp to the Campaign'})
-  completionDate: typeof GraphQLBigInt
+  @Field(() => String, {description: 'Completion unix timeStamp to the Campaign'})
+  completionDate: string
 
   @Field(() => String, {description: 'Country to the campaign'})
   country: string;
