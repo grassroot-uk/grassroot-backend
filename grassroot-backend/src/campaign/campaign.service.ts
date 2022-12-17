@@ -7,45 +7,87 @@ import { UpdateCampaignInput } from './dto/update-campaign.input';
 
 @Injectable()
 export class CampaignService {
-
   constructor(private prismaService: PrismaService) {}
 
   async create(
-    createCampaignInput: CreateCampaignInput, 
-    existingDaoId: string, 
+    createCampaignInput: CreateCampaignInput,
+    existingDaoId: string,
     user: User
   ) {
-
     const existingDao = await this.prismaService.dAO.findFirst({
       where: {
-        id: existingDaoId
-      }
+        id: existingDaoId,
+      },
     });
 
-    if(!existingDao) {
-      throw new HttpException("DAO not exists", 400);
+    if (!existingDao) {
+      throw new HttpException('DAO not exists', 400);
     }
 
-    if(existingDao.adminId !== user.id) {
-      throw new HttpException("Not DAO Owner", 403);
+    if (existingDao.adminId !== user.id) {
+      throw new HttpException('Not DAO Owner', 403);
     }
 
     return this.prismaService.campaign.create({
       data: {
-        ...createCampaignInput
-      }
+        ...createCampaignInput,
+        dao: {
+          connect: {
+            id: existingDao.id,
+          },
+        },
+      },
     });
   }
 
   findAll() {
-    return `This action returns all campaign`;
+    return this.prismaService.campaign.findMany({
+      include: {
+        dao: true,
+        category: true,
+        subCategory: true,
+      },
+    });
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} campaign`;
+    return this.prismaService.campaign.findFirst({
+      include: {
+        dao: true,
+        category: true,
+        subCategory: true,
+      },
+      where: {
+        id: id,
+      },
+    });
   }
 
-  update(id: string, updateCampaignInput: UpdateCampaignInput) {
-    return `This action updates a #${id} campaign`;
+  async update(
+    id: string,
+    updateCampaignInput: UpdateCampaignInput,
+    user: User
+  ) {
+    const existingCampaign = await this.prismaService.campaign.findFirst({
+      where: {
+        id: id,
+      },
+      include: {
+        dao: true,
+      },
+    });
+
+    if (existingCampaign.dao.adminId !== user.id) {
+      throw new HttpException('Not DAO Owner', 403);
+    }
+
+    return this.prismaService.campaign.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...updateCampaignInput,
+      },
+    });
   }
 }

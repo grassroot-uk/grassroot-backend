@@ -26,6 +26,9 @@ type Campaign {
   """Country to the campaign"""
   country: String!
 
+  """Owning Dao for this campaign"""
+  dao: Dao!
+
   """DAO Id to which this campaign is under."""
   daoId: String!
 
@@ -94,8 +97,50 @@ type Contract {
 }
 
 input CreateCampaignInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Blockchain CampaignID of the Campaign"""
+  campaignId: String!
+
+  """City to the campaign"""
+  city: String!
+
+  """Completion unix timeStamp to the Campaign"""
+  completionDate: String!
+
+  """Country to the campaign"""
+  country: String!
+
+  """Total Goal Amount to the Campaign"""
+  goalAmount: String!
+
+  """Images to the Campaign"""
+  images: [String!]!
+
+  """Country to the campaign"""
+  metadata: JSON
+
+  """Minimum Contribution amount to the Campaign"""
+  minAmount: String!
+
+  """State to the campaign"""
+  state: String!
+
+  """Subtitle of the Campaign"""
+  subtitle: String!
+
+  """Title of the Campaign"""
+  title: String!
+
+  """Token denomination name of the token."""
+  tokenCurrency: String!
+
+  """Token Address of the token."""
+  tokenCurrencyAddress: String!
+
+  """Transaction Hash on which Campaign is created."""
+  transactionHash: String!
+
+  """Videos to the Campaign"""
+  videos: [String!]!
 }
 
 input CreateContractInput {
@@ -239,7 +284,8 @@ type Nonce {
 }
 
 type Query {
-  campaign(id: Int!): Campaign!
+  campaign: [Campaign!]!
+  campaignById(id: String!): Campaign!
   contract(id: Int!): Contract!
   contracts: [Contract!]!
   daoById(id: String!): Dao
@@ -271,9 +317,51 @@ type Token {
 }
 
 input UpdateCampaignInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """Blockchain CampaignID of the Campaign"""
+  campaignId: String
+
+  """City to the campaign"""
+  city: String
+
+  """Completion unix timeStamp to the Campaign"""
+  completionDate: String
+
+  """Country to the campaign"""
+  country: String
+
+  """Total Goal Amount to the Campaign"""
+  goalAmount: String
+  id: String!
+
+  """Images to the Campaign"""
+  images: [String!]
+
+  """Country to the campaign"""
+  metadata: JSON
+
+  """Minimum Contribution amount to the Campaign"""
+  minAmount: String
+
+  """State to the campaign"""
+  state: String
+
+  """Subtitle of the Campaign"""
+  subtitle: String
+
+  """Title of the Campaign"""
+  title: String
+
+  """Token denomination name of the token."""
+  tokenCurrency: String
+
+  """Token Address of the token."""
+  tokenCurrencyAddress: String
+
+  """Transaction Hash on which Campaign is created."""
+  transactionHash: String
+
+  """Videos to the Campaign"""
+  videos: [String!]
 }
 
 input UpdateContractInput {

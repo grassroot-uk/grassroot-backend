@@ -1,10 +1,11 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { GraphQLBigInt, GraphQLJSON } from 'graphql-scalars';
+import { GraphQLJSON } from 'graphql-scalars';
 
 @InputType()
 export class CreateCampaignInput {
-  @Field(() => String, { description: 'Id of the Campaign' })
-  id: string;
+
+  @Field(() => String, {description: 'Blockchain CampaignID of the Campaign'})
+  campaignId: string;
 
   @Field(() => String, { description: 'Title of the Campaign' })
   title: string;
@@ -29,17 +30,17 @@ export class CreateCampaignInput {
   @Field(() => String, { description: 'Token Address of the token.' })
   tokenCurrencyAddress: string;
 
-  @Field(() => GraphQLBigInt, {
+  @Field(() => String, {
     description: 'Minimum Contribution amount to the Campaign',
   })
   minAmount: string;
 
-  @Field(() => GraphQLBigInt, {
+  @Field(() => String, {
     description: 'Total Goal Amount to the Campaign',
   })
   goalAmount: string;
 
-  @Field(() => GraphQLBigInt, {
+  @Field(() => String, {
     description: 'Completion unix timeStamp to the Campaign',
   })
   completionDate: string;
@@ -54,10 +55,5 @@ export class CreateCampaignInput {
   city: string;
 
   @Field(() => GraphQLJSON, { description: 'Country to the campaign' })
-  metadata: string;
-
-  @Field(() => String, {
-    description: 'DAO Id to which this campaign is under.',
-  })
-  daoId: string;
+  metadata?: string;
 }

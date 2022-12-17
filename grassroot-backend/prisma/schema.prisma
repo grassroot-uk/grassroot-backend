@@ -97,7 +97,7 @@ model Campaign {
   updatedAt            DateTime   @updatedAt
   title                 String
   subtitle             String
-  campaignId           Int
+  campaignId           String
   transactionHash      String
   category             Category[] @relation("campaignCategory")
   subCategory          Category[] @relation("campaignSubCategory")
@@ -105,9 +105,9 @@ model Campaign {
   videos               String[]
   tokenCurrency        String
   tokenCurrencyAddress String
-  minAmount            BigInt
-  goalAmount           BigInt
-  completionDate       BigInt
+  minAmount            String
+  goalAmount           String
+  completionDate       String
   country              String
   city                 String
   state                String

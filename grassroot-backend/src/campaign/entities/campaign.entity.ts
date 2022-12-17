@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { GraphQLBigInt, GraphQLJSON } from 'graphql-scalars';
+import { Dao } from 'src/dao/entities/dao.entity';
 
 @ObjectType()
 export class Campaign {
@@ -50,5 +51,8 @@ export class Campaign {
   
   @Field(() => String, {description: 'DAO Id to which this campaign is under.'})
   daoId: string
+
+  @Field(() => Dao, {description: "Owning Dao for this campaign"})
+  dao: Dao
 
 }

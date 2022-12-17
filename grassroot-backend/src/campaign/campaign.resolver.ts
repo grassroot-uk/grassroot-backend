@@ -32,18 +32,21 @@ export class CampaignResolver {
     return this.campaignService.findAll();
   }
 
-  @Query(() => Campaign, { name: 'campaign' })
+  @Query(() => Campaign, { name: 'campaignById' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.campaignService.findOne(id);
   }
 
   @Mutation(() => Campaign)
+  @UseGuards(GqlAuthGuard)
   updateCampaign(
-    @Args('updateCampaignInput') updateCampaignInput: UpdateCampaignInput
+    @Args('updateCampaignInput') updateCampaignInput: UpdateCampaignInput,
+    @UserEntity() user: User
   ) {
     return this.campaignService.update(
       updateCampaignInput.id,
-      updateCampaignInput
+      updateCampaignInput,
+      user
     );
   }
 }
