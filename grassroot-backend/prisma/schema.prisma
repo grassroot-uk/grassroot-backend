@@ -95,7 +95,7 @@ model Campaign {
   id                   String     @id @default(cuid())
   createdAt            DateTime   @default(now())
   updatedAt            DateTime   @updatedAt
-  title                 String
+  title                String
   subtitle             String
   campaignId           String
   transactionHash      String
@@ -147,13 +147,12 @@ model Category {
   type TypeCategory @default(CATEGORY)
 }
 
-
 model PendingNonce {
-  id                    String    @id @default(cuid())
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-  address               String?   @unique
-  nonce                 String
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  address   String?  @unique
+  nonce     String
 }
 
 enum TypeCategory {

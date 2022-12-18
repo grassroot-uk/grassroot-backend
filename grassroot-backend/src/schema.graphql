@@ -64,6 +64,11 @@ type Campaign {
   videos: [String!]!
 }
 
+type Category {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Contract {
   """Address of the contract"""
   address: String!
@@ -136,6 +141,11 @@ input CreateCampaignInput {
 
   """Videos to the Campaign"""
   videos: [String!]!
+}
+
+input CreateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 input CreateContractInput {
@@ -249,12 +259,15 @@ scalar JWT
 
 type Mutation {
   createCampaign(createCampaignInput: CreateCampaignInput!, daoId: String!): Campaign!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createContract(createContractInput: CreateContractInput!): Contract!
   createDao(createDaoInput: CreateDaoInput!): Dao!
   generateNonce(data: GenerateNonce!): Nonce!
   refreshToken(token: JWT!): Token!
+  removeCategory(id: Int!): Category!
   signupOrLogin(data: SignupInput!): Auth!
   updateCampaign(updateCampaignInput: UpdateCampaignInput!): Campaign!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateContract(updateContractInput: UpdateContractInput!): Contract!
   updateDao(updateDaoInput: UpdateDaoInput!): Dao!
   updateUser(data: UpdateUserInput!): User!
@@ -281,6 +294,7 @@ type Nonce {
 type Query {
   campaign: [Campaign!]!
   campaignById(id: String!): Campaign!
+  category(id: Int!): Category!
   contract(id: Int!): Contract!
   contracts: [Contract!]!
   daoById(id: String!): Dao
@@ -357,6 +371,12 @@ input UpdateCampaignInput {
 
   """Videos to the Campaign"""
   videos: [String!]
+}
+
+input UpdateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateContractInput {
