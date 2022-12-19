@@ -77,6 +77,10 @@ export class CampaignService {
       },
     });
 
+    if (!existingCampaign) {
+      throw new HttpException('Campaign does not exists', 400);
+    }
+
     if (existingCampaign.dao.adminId !== user.id) {
       throw new HttpException('Not DAO Owner', 403);
     }
