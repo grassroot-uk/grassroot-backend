@@ -8,6 +8,8 @@ import { AuthResolver } from './auth.resolver';
 import { JwtStrategy } from './jwt.strategy';
 import { SecurityConfig } from 'src/common/configs/config.interface';
 import { SignatureService } from './signature.service';
+import { GqlAdminAuthGuard } from './gql-admin-auth.guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Module({
   imports: [
@@ -30,7 +32,9 @@ import { SignatureService } from './signature.service';
     AuthResolver,
     JwtStrategy,
     GqlAuthGuard,
-    SignatureService
+    JwtAuthGuard,
+    GqlAdminAuthGuard,
+    SignatureService,
   ],
   exports: [GqlAuthGuard],
 })

@@ -19,7 +19,6 @@ export class DaoResolver {
     @Args('createDaoInput') createDaoInput: CreateDaoInput,
     @UserEntity() user: User
   ) {
-    Logger.log(createDaoInput);
     return this.daoService.create(createDaoInput, user);
   }
 

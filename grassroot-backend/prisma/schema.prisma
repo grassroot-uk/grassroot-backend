@@ -24,8 +24,7 @@ model DAO {
   profilePicture    String
   backgroundPicture String?
   resources         File[]
-  categories        Category[] @relation("category")
-  subCategories     Category[] @relation("subcategory")
+  categories        Category[]
   tags              Tag[]      @relation("tags")
   metadata          Json?
   participants      String[] /// UserIds
@@ -48,8 +47,6 @@ model User {
   files         File[]
   adminOf       DAO[]      @relation("admin")
   participantOf Json[]
-  categories    Category[]
-  tags          Tag[]
   role          Role
 }
 
@@ -99,8 +96,8 @@ model Campaign {
   subtitle             String
   campaignId           String
   transactionHash      String
-  category             Category[] @relation("campaignCategory")
-  subCategory          Category[] @relation("campaignSubCategory")
+  category             Category[] @relation("category")
+  subCategory          Category[] @relation("subcategory")
   images               String[]
   videos               String[]
   tokenCurrency        String
@@ -121,28 +118,19 @@ model Tag {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  ownerId   String
-  owner     User?    @relation(fields: [ownerId], references: [id])
   name      String
-  daoId     String?
-  dao       DAO?     @relation(name: "tags", fields: [daoId], references: [id])
+  dao       DAO[]    @relation(name: "tags")
 }
 
 model Category {
-  id                    String    @id @default(cuid())
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-  ownerId               String
-  owner                 User?     @relation(fields: [ownerId], references: [id])
-  name                  String
-  daoId                 String?
-  dao                   DAO?      @relation(name: "category", fields: [daoId], references: [id])
-  daoIdSub              String?
-  daoSub                DAO?      @relation(name: "subcategory", fields: [daoIdSub], references: [id])
-  campaignCategoryId    String?   @unique
-  campaignCategory      Campaign? @relation(name: "campaignCategory", fields: [campaignCategoryId], references: [id])
-  campaignSubCategoryId String?   @unique
-  campaignSubCategory   Campaign? @relation(name: "campaignSubCategory", fields: [campaignSubCategoryId], references: [id])
+  id           String     @id @default(cuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  ownerId      String
+  name         String     @unique
+  daos         DAO[]
+  campaigns    Campaign[] @relation("category")
+  subCampaigns Campaign[] @relation("subcategory")
 
   type TypeCategory @default(CATEGORY)
 }

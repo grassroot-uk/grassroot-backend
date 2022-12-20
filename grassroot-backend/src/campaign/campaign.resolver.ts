@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { CampaignService } from './campaign.service';
-import { Campaign } from './entities/campaign.entity';
-import { CreateCampaignInput } from './dto/create-campaign.input';
-import { UpdateCampaignInput } from './dto/update-campaign.input';
+import { CampaignService } from 'src/campaign/campaign.service';
+import { Campaign } from 'src/campaign/entities/campaign.entity';
+import { CreateCampaignInput } from 'src/campaign/dto/create-campaign.input';
+import { UpdateCampaignInput } from 'src/campaign/dto/update-campaign.input';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { UserEntity } from 'src/common/decorators/user.decorator';

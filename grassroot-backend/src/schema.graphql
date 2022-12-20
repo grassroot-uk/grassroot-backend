@@ -65,8 +65,14 @@ type Campaign {
 }
 
 type Category {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Id of the Category"""
+  id: String!
+
+  """Name of the Category"""
+  name: String!
+
+  """Type of the Category"""
+  type: String!
 }
 
 type Contract {
@@ -144,8 +150,11 @@ input CreateCampaignInput {
 }
 
 input CreateCategoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Name of the Category or SubCategory"""
+  name: String!
+
+  """Description of the Category"""
+  type: String!
 }
 
 input CreateContractInput {
@@ -264,7 +273,7 @@ type Mutation {
   createDao(createDaoInput: CreateDaoInput!): Dao!
   generateNonce(data: GenerateNonce!): Nonce!
   refreshToken(token: JWT!): Token!
-  removeCategory(id: Int!): Category!
+  removeCategory(id: String!): Category!
   signupOrLogin(data: SignupInput!): Auth!
   updateCampaign(updateCampaignInput: UpdateCampaignInput!): Campaign!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
@@ -294,7 +303,8 @@ type Nonce {
 type Query {
   campaign: [Campaign!]!
   campaignById(id: String!): Campaign!
-  category(id: Int!): Category!
+  categories: [Category!]!
+  categoryById(id: String!): Category!
   contract(id: Int!): Contract!
   contracts: [Contract!]!
   daoById(id: String!): Dao
@@ -374,9 +384,13 @@ input UpdateCampaignInput {
 }
 
 input UpdateCategoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  id: String!
+
+  """Name of the Category or SubCategory"""
+  name: String
+
+  """Description of the Category"""
+  type: String
 }
 
 input UpdateContractInput {
