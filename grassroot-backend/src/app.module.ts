@@ -17,6 +17,7 @@ import { Web3Module } from './web3/web3.module';
 import { DaoModule } from './dao/dao.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { CategoryModule } from './category/category.module';
+import { SocialModule } from './social/social.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { CategoryModule } from './category/category.module';
     DaoModule,
     CampaignModule,
     CategoryModule,
+    SocialModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

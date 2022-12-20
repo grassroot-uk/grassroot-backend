@@ -21,6 +21,9 @@ type Campaign {
   """Country to the campaign"""
   country: String!
 
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+
   """Owning Dao for this campaign"""
   dao: Dao!
 
@@ -60,19 +63,26 @@ type Campaign {
   """Transaction Hash on which Campaign is created."""
   transactionHash: String!
 
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+
   """Videos to the Campaign"""
   videos: [String!]!
 }
 
 type Category {
-  """Id of the Category"""
-  id: String!
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+  id: ID!
 
   """Name of the Category"""
   name: String!
 
   """Type of the Category"""
   type: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
 }
 
 type Contract {
@@ -206,6 +216,20 @@ input CreateDaoInput {
   profilePicture: String!
 }
 
+input CreateSocialInput {
+  """Icon of the Social"""
+  icon: String!
+
+  """Name of the Social"""
+  name: String!
+
+  """Other details to the Social"""
+  other: JSON
+
+  """URL of the Social"""
+  url: String!
+}
+
 type Dao {
   """DAO admin address."""
   adminAddress: String!
@@ -271,14 +295,17 @@ type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createContract(createContractInput: CreateContractInput!): Contract!
   createDao(createDaoInput: CreateDaoInput!): Dao!
+  createSocial(createSocialInput: CreateSocialInput!): Social!
   generateNonce(data: GenerateNonce!): Nonce!
   refreshToken(token: JWT!): Token!
   removeCategory(id: String!): Category!
+  removeSocial(id: String!): Social!
   signupOrLogin(data: SignupInput!): Auth!
   updateCampaign(updateCampaignInput: UpdateCampaignInput!): Campaign!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateContract(updateContractInput: UpdateContractInput!): Contract!
   updateDao(updateDaoInput: UpdateDaoInput!): Dao!
+  updateSocial(updateSocialInput: UpdateSocialInput!): Social!
   updateUser(data: UpdateUserInput!): User!
 }
 
@@ -301,6 +328,7 @@ type Nonce {
 }
 
 type Query {
+  allSocials: [Social!]!
   campaign: [Campaign!]!
   campaignById(id: String!): Campaign!
   categories: [Category!]!
@@ -311,6 +339,7 @@ type Query {
   daos: [Dao!]!
   me: User!
   myDaos: [Dao!]!
+  socialById(id: String!): Social!
 }
 
 """User role"""
@@ -325,6 +354,27 @@ input SignupInput {
   firstname: String
   lastname: String
   signature: String!
+}
+
+type Social {
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+
+  """Icon of the Social"""
+  icon: String!
+  id: ID!
+
+  """Name of the Social"""
+  name: String!
+
+  """Other details to the Social"""
+  other: JSON!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+
+  """URL of the Social"""
+  url: String!
 }
 
 type Token {
@@ -444,6 +494,21 @@ input UpdateDaoInput {
 
   """Url to the Profile Picture for the DAO."""
   profilePicture: String
+}
+
+input UpdateSocialInput {
+  """Icon of the Social"""
+  icon: String
+  id: String!
+
+  """Name of the Social"""
+  name: String
+
+  """Other details to the Social"""
+  other: JSON
+
+  """URL of the Social"""
+  url: String
 }
 
 input UpdateUserInput {

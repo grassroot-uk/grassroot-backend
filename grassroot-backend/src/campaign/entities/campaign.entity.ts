@@ -1,9 +1,10 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { GraphQLBigInt, GraphQLJSON } from 'graphql-scalars';
+import { BaseModel } from 'src/common/models/base.model';
 import { Dao } from 'src/dao/entities/dao.entity';
 
 @ObjectType()
-export class Campaign {
+export class Campaign extends BaseModel {
   @Field(() => String, { description: 'Id of the Campaign' })
   id: string;
 

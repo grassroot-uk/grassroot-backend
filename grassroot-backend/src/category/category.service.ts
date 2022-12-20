@@ -30,8 +30,8 @@ export class CategoryService {
     });
   }
 
-  update(id: string, updateCategoryInput: UpdateCategoryInput) {
-    const oldObject = this.prismaService.category.findUnique({
+  async update(id: string, updateCategoryInput: UpdateCategoryInput) {
+    const oldObject = await this.prismaService.category.findUnique({
       where: {
         id: id,
       },

@@ -69,7 +69,7 @@ Table Social {
   userId String
   daoId String
   dao DAO
-  Other Json
+  other Json
 }
 
 Table Campaign {

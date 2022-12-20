@@ -79,7 +79,7 @@ model Social {
   userId    String?
   daoId     String?
   dao       DAO?     @relation(fields: [daoId], references: [id])
-  Other     Json?
+  other     Json?
 }
 
 // model Contract {
