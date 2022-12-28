@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
-import '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
-import '@openzeppelin/contracts/metatx/ERC2771Context.sol';
-import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import '@openzeppelin/contracts/utils/Counters.sol';
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 pragma abicoder v2;
 
@@ -38,10 +38,11 @@ contract GrassrootCrowdfunding is
 
     mapping(uint256 => Crowdfunding) public crowdfundingCampaigns;
 
+    mapping(address => bool) public allowedAddresses;
     mapping(IERC20 => bool) public allowedERC20Tokens;
 
-    bytes32 public constant UPGRADER_ROLE = keccak256('UPGRADER_ROLE');
-    bytes32 public constant ADMIN_ROLE = keccak256('ADMIN_ROLE');
+    bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     event CampaignCreated(
         address _campaignAdmin,
@@ -79,7 +80,7 @@ contract GrassrootCrowdfunding is
         _disableInitializers();
     }
 
-    function initialize() initializer public  {
+    function initialize() public initializer {
         __AccessControl_init();
         __UUPSUpgradeable_init();
 
@@ -87,6 +88,7 @@ contract GrassrootCrowdfunding is
         _grantRole(ADMIN_ROLE, msg.sender);
         _setRoleAdmin(UPGRADER_ROLE, ADMIN_ROLE);
         _grantRole(UPGRADER_ROLE, msg.sender);
+        allowedAddresses[msg.sender] = true;
     }
 
     /**
@@ -105,11 +107,27 @@ contract GrassrootCrowdfunding is
         allowedERC20Tokens[IERC20(erc20Token)] = false;
     }
 
-    function _authorizeUpgrade(address newImplementation)
-        internal
-        override
-        onlyRole(UPGRADER_ROLE)
-    {}
+    /**
+     * @dev Allows a new Address for creating Campaigns Right
+     */
+    function addAllowedAddress(
+        address _newAllowedAddress
+    ) public onlyRole(ADMIN_ROLE) {
+        allowedAddresses[_newAllowedAddress] = true;
+    }
+
+    /**
+     * @dev Removed a address from creating campaign right
+     */
+    function revokeAllowedAddress(
+        address _address
+    ) public onlyRole(ADMIN_ROLE) {
+        allowedAddresses[_address] = false;
+    }
+
+    function _authorizeUpgrade(
+        address newImplementation
+    ) internal override onlyRole(UPGRADER_ROLE) {}
 
     function _msgData()
         internal
@@ -156,8 +174,10 @@ contract GrassrootCrowdfunding is
     ) external returns (uint256) {
         require(
             allowedERC20Tokens[IERC20(_tokenAddress)],
-            'ERC20Token is not allowed for denomination'
+            "ERC20Token is not allowed for denomination"
         );
+
+        require(allowedAddresses[msg.sender], "Not allowed to create Campaign");
 
         Crowdfunding memory campaign = Crowdfunding(
             _campaignAdmin,
@@ -200,11 +220,11 @@ contract GrassrootCrowdfunding is
             campaign._campaignAdmin != address(0),
             "Campaign doesn't exists!!!"
         );
-        require(!campaign._isCompleted, 'Campaign is expired!!');
+        require(!campaign._isCompleted, "Campaign is expired!!");
 
         require(
             campaign._minAmountContribution <= _amountDonating,
-            'Amount donating is less that minimum amount donation for crowdfunding campaign'
+            "Amount donating is less that minimum amount donation for crowdfunding campaign"
         );
 
         uint256 allowance = IERC20(campaign._tokenAddress).allowance(
@@ -226,7 +246,7 @@ contract GrassrootCrowdfunding is
 
         require(
             success,
-            'Failed to transfer amount from token to this contract.'
+            "Failed to transfer amount from token to this contract."
         );
 
         // Update the token details
@@ -252,25 +272,25 @@ contract GrassrootCrowdfunding is
     function withdrawCampaign(uint256 _campaignId) external {
         Crowdfunding memory campaign = crowdfundingCampaigns[_campaignId];
 
-        require(campaign._isCompleted, 'Campaign is not completed.');
+        require(campaign._isCompleted, "Campaign is not completed.");
         require(
             campaign._campaignAdmin == msg.sender,
-            'Sender is not campaign admin.'
+            "Sender is not campaign admin."
         );
 
         require(
             campaign._tokenCollected >= campaign._targetAmount,
-            'Campaign Goal is not reached!!!'
+            "Campaign Goal is not reached!!!"
         );
 
-        require(!campaign._isRedeemed, 'Campaign is Already Redeemed!!');
+        require(!campaign._isRedeemed, "Campaign is Already Redeemed!!");
 
         bool success = IERC20(campaign._tokenAddress).transfer(
             msg.sender,
             campaign._tokenCollected
         );
 
-        require(success, 'Failed to tranfer amount to the campaign admin.');
+        require(success, "Failed to tranfer amount to the campaign admin.");
 
         // Update the campaign
         campaign._isRedeemed = true;
@@ -287,7 +307,9 @@ contract GrassrootCrowdfunding is
     }
 
     // View Functions
-    function getCampaignValues(uint256 _idx)
+    function getCampaignValues(
+        uint256 _idx
+    )
         public
         view
         returns (
@@ -329,16 +351,15 @@ contract GrassrootCrowdfunding is
      * @param _from From index you want to query
      * @param _to Upto which index you want to query
      */
-    function getCampaignsInIdxRange(uint256 _from, uint256 _to)
-        external
-        view
-        returns (bytes[] memory)
-    {
+    function getCampaignsInIdxRange(
+        uint256 _from,
+        uint256 _to
+    ) external view returns (bytes[] memory) {
         uint256 _currentTokenId = _crowdfundingsCounter.current();
 
         require(
             _to <= _currentTokenId && _from < _to,
-            'Index are not in range!!'
+            "Index are not in range!!"
         );
 
         uint256 _uptoIdx = _to - _from;

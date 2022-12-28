@@ -2,504 +2,60 @@
   "manifestVersion": "3.2",
   "proxies": [
     {
-      "address": "0x6ddC3Bde48ADdE719dee30200587A484b5db2bd7",
-      "txHash": "0x42bc41972d62770b460da9c8dd7ea2ec22a01d27f70fcd9259619218655a02e6",
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "txHash": "0x3d6d67fce9c45bafc004f9f5a7ef8cfd504e4194c2cf0e83b3118f3bbdc09f7a",
       "kind": "uups"
     },
     {
-      "address": "0x35F9f89CFd2e932393dc8eef779D7B43f29Ae079",
-      "txHash": "0x3b5f4002b3190ba0b01f91d8919d9938bf3008489e405e302bf436a12498ef15",
+      "address": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      "txHash": "0x51952bd9206a64feb22317540bfade5be0fce954689d15b283e2e51a9cb052f9",
       "kind": "uups"
     },
     {
-      "address": "0x076c043bffB56F75dae2aba1E2a889F193A84cDF",
-      "txHash": "0xdc3c9209a0e27a7e6da6e04670dd371fca5bd27028061758f4e0e8237210948b",
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "txHash": "0x64aa517b2657847c55d2f9ad95deb0582650a44a4c6f0b522e9165b87d3fa878",
       "kind": "uups"
     },
     {
-      "address": "0xc9C9637035A390B2c6f3E99F54AF0BC4c14b6765",
-      "txHash": "0x7e1dbf9d62b140d60aeaa21482dafa252430a344095b10b7e91680ac116068d3",
+      "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      "txHash": "0x7e8a7596bdb1d6348f824fe67fbfc8c5b11965455d25d35905273ee8532d00d7",
+      "kind": "uups"
+    },
+    {
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "txHash": "0x3cd594197124c699bbef0bf15c4d164ef7e3d006747c2e782fb1303236c68d33",
+      "kind": "uups"
+    },
+    {
+      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      "txHash": "0x5ec079230dec74f543e744e337f946e75f26f630202a9e74f3627798b2ce0854",
+      "kind": "uups"
+    },
+    {
+      "address": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+      "txHash": "0x729fc2b3d48f9d9a19a71fcfdd94b09442f1d13d6d2f60e0cf7ea6ca32401957",
+      "kind": "uups"
+    },
+    {
+      "address": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+      "txHash": "0x255db05854c0e23e07f5c406307af88200f37b83cb5ba467431cd903cc0c81a2",
+      "kind": "uups"
+    },
+    {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0xad22b9880ed37b0733ad2e402d99239d7a6fb32a825305907c603be3baad9fc8",
+      "kind": "uups"
+    },
+    {
+      "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+      "txHash": "0x701b3d0348263aa77ead0ffdc3caecb6a077f2727aa2cd8c5b928c1bbcbc0b96",
       "kind": "uups"
     }
   ],
   "impls": {
-    "1ef04a7108ff58fa051c0773619b5acc3a43b919c8d31a5bfcdc2c17ac7e63fb": {
-      "address": "0x125a432C4954e6484c41a532406A49cB224b5038",
-      "txHash": "0xa08aa618104680fecd47fe8aaa0fa591e27dd91cfdaa2a3d4d318ac0f97f34fd",
-      "layout": {
-        "solcVersion": "0.8.9",
-        "storage": [
-          {
-            "label": "_initialized",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_uint8",
-            "contract": "Initializable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
-            "retypedFrom": "bool"
-          },
-          {
-            "label": "_initializing",
-            "offset": 1,
-            "slot": "0",
-            "type": "t_bool",
-            "contract": "Initializable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ContextUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "51",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ERC165Upgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
-          },
-          {
-            "label": "_roles",
-            "offset": 0,
-            "slot": "101",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
-            "contract": "AccessControlUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "102",
-            "type": "t_array(t_uint256)49_storage",
-            "contract": "AccessControlUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "151",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ERC1967UpgradeUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "201",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "UUPSUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
-          },
-          {
-            "label": "_crowdfundingsCounter",
-            "offset": 0,
-            "slot": "251",
-            "type": "t_struct(Counter)2769_storage",
-            "contract": "GrassrootCrowdfunding",
-            "src": "contracts/CrowdFunding.sol:23"
-          },
-          {
-            "label": "crowdfundingCampaigns",
-            "offset": 0,
-            "slot": "252",
-            "type": "t_mapping(t_uint256,t_struct(Crowdfunding)2884_storage)",
-            "contract": "GrassrootCrowdfunding",
-            "src": "contracts/CrowdFunding.sol:39"
-          },
-          {
-            "label": "allowedERC20Tokens",
-            "offset": 0,
-            "slot": "253",
-            "type": "t_mapping(t_contract(IERC20)2741,t_bool)",
-            "contract": "GrassrootCrowdfunding",
-            "src": "contracts/CrowdFunding.sol:41"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]",
-            "numberOfBytes": "1568"
-          },
-          "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]",
-            "numberOfBytes": "1600"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_bytes32": {
-            "label": "bytes32",
-            "numberOfBytes": "32"
-          },
-          "t_contract(IERC20)2741": {
-            "label": "contract IERC20",
-            "numberOfBytes": "20"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_contract(IERC20)2741,t_bool)": {
-            "label": "mapping(contract IERC20 => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(Crowdfunding)2884_storage)": {
-            "label": "mapping(uint256 => struct GrassrootCrowdfunding.Crowdfunding)",
-            "numberOfBytes": "32"
-          },
-          "t_string_storage": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_struct(Counter)2769_storage": {
-            "label": "struct Counters.Counter",
-            "members": [
-              {
-                "label": "_value",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(Crowdfunding)2884_storage": {
-            "label": "struct GrassrootCrowdfunding.Crowdfunding",
-            "members": [
-              {
-                "label": "_campaignAdmin",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_tokenAddress",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "_campaignName",
-                "type": "t_bytes32",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "_metadataCid",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "_minAmountContribution",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "_targetAmount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "5"
-              },
-              {
-                "label": "_tokenCollected",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "6"
-              },
-              {
-                "label": "_category",
-                "type": "t_uint16",
-                "offset": 0,
-                "slot": "7"
-              },
-              {
-                "label": "_isCompleted",
-                "type": "t_bool",
-                "offset": 2,
-                "slot": "7"
-              },
-              {
-                "label": "_isRedeemed",
-                "type": "t_bool",
-                "offset": 3,
-                "slot": "7"
-              },
-              {
-                "label": "_validUntil",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "8"
-              }
-            ],
-            "numberOfBytes": "288"
-          },
-          "t_struct(RoleData)34_storage": {
-            "label": "struct AccessControlUpgradeable.RoleData",
-            "members": [
-              {
-                "label": "members",
-                "type": "t_mapping(t_address,t_bool)",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "adminRole",
-                "type": "t_bytes32",
-                "offset": 0,
-                "slot": "1"
-              }
-            ],
-            "numberOfBytes": "64"
-          },
-          "t_uint16": {
-            "label": "uint16",
-            "numberOfBytes": "2"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint8": {
-            "label": "uint8",
-            "numberOfBytes": "1"
-          }
-        }
-      }
-    },
-    "fab7215a8bc810b41faa471fcee683c6816367253a8e67c6113a3dfb0b444be9": {
-      "address": "0xF57Dd1122D2F3077311CaCdbf61239F3CCA65870",
-      "txHash": "0x08a2943ecd63a7ba075ab40ab14c34757b6b2917daa4b236b08f47ecd03f82ef",
-      "layout": {
-        "solcVersion": "0.8.9",
-        "storage": [
-          {
-            "label": "_initialized",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_uint8",
-            "contract": "Initializable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
-            "retypedFrom": "bool"
-          },
-          {
-            "label": "_initializing",
-            "offset": 1,
-            "slot": "0",
-            "type": "t_bool",
-            "contract": "Initializable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ContextUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "51",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ERC165Upgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
-          },
-          {
-            "label": "_roles",
-            "offset": 0,
-            "slot": "101",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
-            "contract": "AccessControlUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "102",
-            "type": "t_array(t_uint256)49_storage",
-            "contract": "AccessControlUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "151",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ERC1967UpgradeUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "201",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "UUPSUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
-          },
-          {
-            "label": "_daosCounter",
-            "offset": 0,
-            "slot": "251",
-            "type": "t_struct(Counter)2590_storage",
-            "contract": "DAOS",
-            "src": "contracts/DAO.sol:17"
-          },
-          {
-            "label": "crowdfundingContract",
-            "offset": 0,
-            "slot": "252",
-            "type": "t_address",
-            "contract": "DAOS",
-            "src": "contracts/DAO.sol:27"
-          },
-          {
-            "label": "daos",
-            "offset": 0,
-            "slot": "253",
-            "type": "t_mapping(t_uint256,t_struct(DAO)2697_storage)",
-            "contract": "DAOS",
-            "src": "contracts/DAO.sol:28"
-          },
-          {
-            "label": "campaignToDaos",
-            "offset": 0,
-            "slot": "254",
-            "type": "t_mapping(t_uint256,t_uint256)",
-            "contract": "DAOS",
-            "src": "contracts/DAO.sol:29"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]",
-            "numberOfBytes": "1568"
-          },
-          "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]",
-            "numberOfBytes": "1600"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_bytes32": {
-            "label": "bytes32",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(DAO)2697_storage)": {
-            "label": "mapping(uint256 => struct DAOS.DAO)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_uint256)": {
-            "label": "mapping(uint256 => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_string_storage": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_struct(Counter)2590_storage": {
-            "label": "struct Counters.Counter",
-            "members": [
-              {
-                "label": "_value",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(DAO)2697_storage": {
-            "label": "struct DAOS.DAO",
-            "members": [
-              {
-                "label": "name",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "description",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "metadata",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "admin",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          },
-          "t_struct(RoleData)34_storage": {
-            "label": "struct AccessControlUpgradeable.RoleData",
-            "members": [
-              {
-                "label": "members",
-                "type": "t_mapping(t_address,t_bool)",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "adminRole",
-                "type": "t_bytes32",
-                "offset": 0,
-                "slot": "1"
-              }
-            ],
-            "numberOfBytes": "64"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint8": {
-            "label": "uint8",
-            "numberOfBytes": "1"
-          }
-        }
-      }
-    },
-    "8d770f9894614abb4a78414ae2d1ce46c28d6070fcb89efd38f03368a185843a": {
-      "address": "0x74C126a513c536BB1221400d99fd9675A31Cf44a",
-      "txHash": "0x46194162c66d1bbcf87bdcb52b0a92bd3bd2f4ec0c33f6fe1034e21de4acf3a7",
+    "71f85e7c8c9d0120d39ac724477a07c75ceb50bc7f0a6147d1f7b8372ab63778": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0x03a4e842298a44a6c969636bceb3728b9b69f65aef1e65e5c2f6fc4b9f69aefc",
       "layout": {
         "solcVersion": "0.8.9",
         "storage": [
@@ -764,8 +320,8 @@
       }
     },
     "28907fd88cbe1d7238dfd93f945113f6df2c2650182670fcd80fe30d9265d381": {
-      "address": "0xab80F60Af0D2b7eB001B71176c08e4C0ab77BfF2",
-      "txHash": "0x44704218808bdbd3f2c06d9b902b2fde893144599d002a518c8e92b96b72a9cb",
+      "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      "txHash": "0x065ad98e779fcd0bb9ee817290dac3ef255596684c204612f9ecf978aed5ff16",
       "layout": {
         "solcVersion": "0.8.9",
         "storage": [
@@ -973,6 +529,272 @@
               }
             ],
             "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "45b4412b69d12156e16cc7bc02f71aaedb5e9bdf1452f3ce82fe6818ec117716": {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0xc3696d16db1d4ec9cec9684726e23744900c9647450b98241b4282dc6fb1bab7",
+      "layout": {
+        "solcVersion": "0.8.9",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_roles",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_crowdfundingsCounter",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_struct(Counter)2769_storage",
+            "contract": "GrassrootCrowdfunding",
+            "src": "contracts/CrowdFunding.sol:23"
+          },
+          {
+            "label": "crowdfundingCampaigns",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_struct(Crowdfunding)2884_storage)",
+            "contract": "GrassrootCrowdfunding",
+            "src": "contracts/CrowdFunding.sol:39"
+          },
+          {
+            "label": "allowedAddresses",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "GrassrootCrowdfunding",
+            "src": "contracts/CrowdFunding.sol:41"
+          },
+          {
+            "label": "allowedERC20Tokens",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_contract(IERC20)2741,t_bool)",
+            "contract": "GrassrootCrowdfunding",
+            "src": "contracts/CrowdFunding.sol:42"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IERC20)2741": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_contract(IERC20)2741,t_bool)": {
+            "label": "mapping(contract IERC20 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Crowdfunding)2884_storage)": {
+            "label": "mapping(uint256 => struct GrassrootCrowdfunding.Crowdfunding)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)2769_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(Crowdfunding)2884_storage": {
+            "label": "struct GrassrootCrowdfunding.Crowdfunding",
+            "members": [
+              {
+                "label": "_campaignAdmin",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_tokenAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "_campaignName",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "_metadataCid",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "_minAmountContribution",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "_targetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "_tokenCollected",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "_category",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "_isCompleted",
+                "type": "t_bool",
+                "offset": 2,
+                "slot": "7"
+              },
+              {
+                "label": "_isRedeemed",
+                "type": "t_bool",
+                "offset": 3,
+                "slot": "7"
+              },
+              {
+                "label": "_validUntil",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              }
+            ],
+            "numberOfBytes": "288"
+          },
+          "t_struct(RoleData)34_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
           },
           "t_uint256": {
             "label": "uint256",

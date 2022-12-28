@@ -14,38 +14,43 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
 
     using Counters for Counters.Counter;
 
-    Counters.Counter private _daosCounter;
+    Counters.Counter public _daosCounter;
 
     /// Structures
     struct DAO {
         string name;
-        string description;
         string metadata;
         address admin;
     }
 
     address public crowdfundingContract;
     mapping(uint256 => DAO) public daos;
-    mapping(uint256 => uint256) campaignToDaos;
+    mapping(uint256 => uint256) public campaignToDaos;
+    mapping(uint256 => mapping(address => bool)) public memberships;
 
     /// Events
     event DAOCreated(
         uint256 daoId,
         string name,
-        string description,
-        string metadata,
-        address admin
-    );
-    
-    event DAOUpdated(
-        uint256 daoId,
-        string name,
-        string description,
         string metadata,
         address admin
     );
 
-    event CampaignLinked(uint256 campaignId, uint256 daoId);
+    event DAOUpdated(
+        uint256 daoId,
+        string name,
+        string metadata,
+        address admin
+    );
+
+    event CampaignCreated(uint256 campaignId, uint256 daoId);
+
+    event MembershipGranted(uint256 daoId, address member);
+    event MembershipRevoked(
+        uint256 daoId,
+        address adminAddress,
+        address member
+    );
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -76,17 +81,12 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     // External Functions
 
     /// Create a DAO
-    function createDao(
-        string memory _name,
-        string memory _description,
-        string memory _metadata
-    ) external {
+    function createDao(string memory _name, string memory _metadata) external {
         require(msg.sender != address(0), "Not a valid sender");
 
         DAO memory newDao;
         newDao.admin = msg.sender;
         newDao.name = _name;
-        newDao.description = _description;
         newDao.metadata = _metadata;
 
         uint256 daoId = _daosCounter.current();
@@ -97,7 +97,7 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         // Grant role to sender.
         _grantRole(OWNER_ROLE, msg.sender);
 
-        emit DAOCreated(daoId, _name, _description, _metadata, msg.sender);
+        emit DAOCreated(daoId, _name, _metadata, msg.sender);
     }
 
     /// Create a campaign
@@ -137,19 +137,18 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
             _validUntil
         );
 
-        require(campaignId > 0, "Campaign not created!!");
+        require(campaignId >= 0, "Campaign not created!!");
 
         campaignToDaos[campaignId] = _daoId;
         // Emit EVENT and Update Some Mapping
-        emit CampaignLinked(campaignId, _daoId);
+        emit CampaignCreated(campaignId, _daoId);
     }
 
     /// Modify DAO
     function modifyDao(
         uint256 daoId,
         string memory _metadata,
-        string memory _name,
-        string memory _description
+        string memory _name
     ) external onlyRole(OWNER_ROLE) {
         // Get the Dao
         // Check for admin with msg.sender
@@ -159,13 +158,12 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         require(tobeUpdatedDao.admin == msg.sender, "Not the DAO Owner!!");
 
         tobeUpdatedDao.name = _name;
-        tobeUpdatedDao.description = _description;
         tobeUpdatedDao.metadata = _metadata;
 
         // Repush
         daos[daoId] = tobeUpdatedDao;
 
-        emit DAOUpdated(daoId, _name, _description, _metadata, msg.sender);
+        emit DAOUpdated(daoId, _name, _metadata, msg.sender);
     }
 
     /// Modify Metadata
@@ -181,17 +179,68 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
 
         tobeUpdatedDao.metadata = _metadata;
 
-        emit DAOUpdated(
-            _daoId,
-            tobeUpdatedDao.name,
-            tobeUpdatedDao.description,
-            _metadata,
-            msg.sender
+        emit DAOUpdated(_daoId, tobeUpdatedDao.name, _metadata, msg.sender);
+    }
+
+    /// Grant Membership
+    function getMembership(uint256 _daoId) external {
+        DAO memory joiningDao = daos[_daoId];
+
+        require(joiningDao.admin != address(0), "DAO doesn't exists!!");
+
+        require(
+            memberships[_daoId][msg.sender] == false,
+            "Already joined in the DAO!!"
         );
+
+        memberships[_daoId][msg.sender] = true;
+
+        emit MembershipGranted(_daoId, msg.sender);
+    }
+
+    function grantMembership(uint256 _daoId, address _newMember) onlyRole(OWNER_ROLE) external {
+        DAO memory joiningDao = daos[_daoId];
+
+        require(joiningDao.admin != address(0), "DAO doesn't exists!!");
+        require(joiningDao.admin == msg.sender, "Not the DAO Owner!!");
+
+        require(
+            memberships[_daoId][_newMember] == false,
+            "Already joined in the DAO!!"
+        );
+
+        memberships[_daoId][_newMember] = true;
+
+        emit MembershipGranted(_daoId, _newMember);
+    }
+
+    function revokeMembership(
+        uint256 _daoId,
+        address _revokedAddress
+    ) external {
+        DAO memory revokingDao = daos[_daoId];
+
+        require(revokingDao.admin != address(0), "DAO doesn't exists!!");
+
+        require(
+            memberships[_daoId][_revokedAddress] == true,
+            "Not joined the DAO!!"
+        );
+
+        // Admin's can revoke any for that dao
+        if (revokingDao.admin == msg.sender) {
+            memberships[_daoId][_revokedAddress] = false;
+            emit MembershipRevoked(_daoId, msg.sender, _revokedAddress);
+        }
+
+        // Can self revoke
+        if (_revokedAddress == msg.sender) {
+            memberships[_daoId][_revokedAddress] = false;
+            emit MembershipRevoked(_daoId, msg.sender, _revokedAddress);
+        } 
     }
 
     /// View Functions
-
     function getDAOs(
         uint256 _fromIdx,
         uint256 _toIdx
@@ -214,7 +263,6 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
             returndaos[_idx] = abi.encode(
                 _daoId,
                 _dao.name,
-                _dao.description,
                 _dao.metadata,
                 _dao.admin
             );
