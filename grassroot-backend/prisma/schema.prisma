@@ -82,11 +82,18 @@ model Social {
   other     Json?
 }
 
-// model Contract {
-//   id            String    @id @default(cuid())
-//   createdAt     DateTime  @default(now())
-//   updatedAt     DateTime  @updatedAt
-// }
+model Contract {
+  id            String    @id @default(cuid())
+  name          String
+  abi           Json
+  address       String
+  networkName   String
+  explorerUrl   String
+  networkSlug   String
+  chainId       Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
 
 model Campaign {
   id                   String     @id @default(cuid())

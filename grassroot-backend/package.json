@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/fivethree-team/nestjs-prisma-client-example.git"
+    "url": "https://github.com/grassroot-uk/grassroot-backend.git"
   },
   "bugs": {
-    "url": "https://github.com/fivethree-team/nestjs-prisma-client-example/issues"
+    "url": "https://github.com/grassroot-uk/grassroot-backend/issues"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -60,6 +60,7 @@
     "@nestjs/core": "9.0.5",
     "@nestjs/graphql": "10.0.20",
     "@nestjs/jwt": "9.0.0",
+    "@nestjs/microservices": "^9.2.1",
     "@nestjs/passport": "9.0.0",
     "@nestjs/platform-express": "9.0.5",
     "@nestjs/swagger": "6.0.4",

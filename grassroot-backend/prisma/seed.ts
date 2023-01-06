@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import createCategories from './seeds/categories';
+import { createContracts } from './seeds/contracts';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +14,6 @@ async function main() {
     }
   })
 
-  // TODO: Seed Contracts Here
   await prisma.user.createMany({
     data: [
       {
@@ -35,6 +35,7 @@ async function main() {
   });
 
   await createCategories(prisma, user.id);
+  await createContracts(prisma);
 }
 
 main()

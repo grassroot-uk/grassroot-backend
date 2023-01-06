@@ -3,13 +3,18 @@ import { ContractsService } from './contracts.service';
 import { Contract } from './entities/contract.entity';
 import { CreateContractInput } from './dto/create-contract.input';
 import { UpdateContractInput } from './dto/update-contract.input';
+import { GqlAdminAuthGuard } from 'src/auth/gql-admin-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Contract)
 export class ContractsResolver {
   constructor(private readonly contractsService: ContractsService) {}
 
   @Mutation(() => Contract)
-  createContract(@Args('createContractInput') createContractInput: CreateContractInput) {
+  @UseGuards(GqlAdminAuthGuard)
+  createContract(
+    @Args('createContractInput') createContractInput: CreateContractInput
+  ) {
     return this.contractsService.create(createContractInput);
   }
 
@@ -19,12 +24,18 @@ export class ContractsResolver {
   }
 
   @Query(() => Contract, { name: 'contract' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.contractsService.findOne(id);
   }
 
   @Mutation(() => Contract)
-  updateContract(@Args('updateContractInput') updateContractInput: UpdateContractInput) {
-    return this.contractsService.update(updateContractInput.id, updateContractInput);
+  @UseGuards(GqlAdminAuthGuard)
+  updateContract(
+    @Args('updateContractInput') updateContractInput: UpdateContractInput
+  ) {
+    return this.contractsService.update(
+      updateContractInput.id,
+      updateContractInput
+    );
   }
 }

@@ -13,18 +13,22 @@ export class ContractsService {
   }
 
   findAll() {
-    return `This action returns all contracts`;
+    return this.prisma.contract.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contract`;
+  findOne(id: string) {
+    return this.prisma.contract.findFirst({
+      where: {
+        id: id
+      }
+    });
   }
 
-  update(id: number, updateContractInput: UpdateContractInput) {
+  update(id: string, updateContractInput: UpdateContractInput) {
     return `This action updates a #${id} contract`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contract`;
-  }
+  // remove(id: string) {
+  //   return `This action removes a #${id} contract`;
+  // }
 }

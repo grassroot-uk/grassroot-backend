@@ -7,18 +7,21 @@ export class Contract extends BaseModel {
   @Field(() => String, { description: 'Name of the contract' })
   name: string;
 
-  @Field(() => String, { description: 'Description of the contract' })
-  description: string;
-
-  @Field(() => String, {description: "Network Name"})
+  @Field(() => String, { description: 'Network name' })
   networkName: string;
+
+  @Field(() => String, {description: "Network Slug"})
+  networkSlug: string;
 
   @Field(() => String, {description: "Address of the contract"})
   address: string;
 
-  @Field(() => String, {description: "Transaction hash of Contract Deployment"})
-  transactionHash: string
+  @Field(() => Number, {description: "Chain Id of the network"})
+  chainId: number;
 
-  @Field(() => GraphQLJSON, {description: "Metadata of Contract"})
-  metadata: JSON
+  @Field(() => String, {description: "Explorer URL for Contract"})
+  explorerUrl: string;
+
+  @Field(() => GraphQLJSON, {description: "ABI of Contract"})
+  abi: JSON
 }

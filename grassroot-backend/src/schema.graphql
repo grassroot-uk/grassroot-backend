@@ -86,27 +86,30 @@ type Category {
 }
 
 type Contract {
+  """ABI of Contract"""
+  abi: JSON!
+
   """Address of the contract"""
   address: String!
+
+  """Chain Id of the network"""
+  chainId: Int!
 
   """Identifies the date and time when the object was created."""
   createdAt: DateTime!
 
-  """Description of the contract"""
-  description: String!
+  """Explorer URL for Contract"""
+  explorerUrl: String!
   id: ID!
-
-  """Metadata of Contract"""
-  metadata: JSON!
 
   """Name of the contract"""
   name: String!
 
-  """Network Name"""
+  """Network name"""
   networkName: String!
 
-  """Transaction hash of Contract Deployment"""
-  transactionHash: String!
+  """Network Slug"""
+  networkSlug: String!
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: DateTime!
@@ -333,7 +336,7 @@ type Query {
   campaignById(id: String!): Campaign!
   categories: [Category!]!
   categoryById(id: String!): Category!
-  contract(id: Int!): Contract!
+  contract(id: String!): Contract!
   contracts: [Contract!]!
   daoById(id: String!): Dao
   daos: [Dao!]!
@@ -452,7 +455,7 @@ input UpdateContractInput {
 
   """Description of the contract"""
   description: String
-  id: Int!
+  id: String!
 
   """Metadata of Contract"""
   metadata: JSON
