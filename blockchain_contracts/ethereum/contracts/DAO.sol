@@ -36,7 +36,7 @@ contract DAOS is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         address admin
     );
 
-    event DAOUpdated(
+   event DAOUpdated(
         uint256 daoId,
         string name,
         string metadata,

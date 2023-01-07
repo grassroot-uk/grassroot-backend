@@ -17,4 +17,10 @@ export class CreateDaoInput {
 
   @Field(() => GraphQLJSON, {description: 'Metadata JSON to the DAO'})
   metadata: string;
+
+  @Field(() => String, {
+    description: 'DAO Id on the Smart Contract',
+  })
+  blockchainDaoId: string;
+
 }

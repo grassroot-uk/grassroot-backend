@@ -10,22 +10,31 @@ export class DaoService {
 
   create(createDaoInput: CreateDaoInput, user: User) {
     return this.prismaService.dAO.create({
-      data: { 
-        ...createDaoInput, 
-        adminId: user.id, 
-        adminAddress: user.address 
+      data: {
+        ...createDaoInput,
+        adminId: user.id,
+        adminAddress: user.address,
       },
     });
   }
 
   findAll() {
-    return this.prismaService.dAO.findMany();
+    return this.prismaService.dAO.findMany({
+      include: {
+        admin: true,
+        activeCampaigns: true,
+      },
+    });
   }
 
   findOne(id: string) {
     return this.prismaService.dAO.findFirst({
       where: {
         id: id,
+      },
+      include: {
+        admin: true,
+        activeCampaigns: true,
       },
     });
   }
@@ -35,17 +44,21 @@ export class DaoService {
       where: {
         adminAddress: user.address,
       },
+      include: {
+        admin: true,
+        activeCampaigns: true,
+      },
     });
   }
 
   update(id: string, updateDaoInput: UpdateDaoInput, user: User) {
     return this.prismaService.dAO.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        ...updateDaoInput
-      }
+        ...updateDaoInput,
+      },
     });
   }
 

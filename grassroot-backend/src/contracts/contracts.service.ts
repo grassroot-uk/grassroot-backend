@@ -24,6 +24,14 @@ export class ContractsService {
     });
   }
 
+  findOneByAddress(address: string) {
+    return this.prisma.contract.findFirst({
+      where: {
+        address: address
+      }
+    });
+  }
+
   update(id: string, updateContractInput: UpdateContractInput) {
     return `This action updates a #${id} contract`;
   }

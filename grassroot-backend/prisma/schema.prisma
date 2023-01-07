@@ -18,6 +18,7 @@ model DAO {
   updatedAt         DateTime   @updatedAt
   name              String
   description       String
+  blockchainDaoId   String     @default("not_set")
   adminAddress      String
   adminId           String
   admin             User?      @relation(name: "admin", fields: [adminId], references: [id])

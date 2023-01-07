@@ -12,6 +12,9 @@ type Auth {
 }
 
 type Campaign {
+  """Campaign Id for the campaign on Blockchain"""
+  campaignId: String!
+
   """City to the campaign"""
   city: String!
 
@@ -206,6 +209,9 @@ input CreateDaoInput {
   """Url to the Background Picture for the DAO."""
   backgroundPicture: String!
 
+  """DAO Id on the Smart Contract"""
+  blockchainDaoId: String!
+
   """Description of the DAO."""
   description: String!
 
@@ -234,6 +240,12 @@ input CreateSocialInput {
 }
 
 type Dao {
+  """Campaigns to the DAO"""
+  activeCampaigns: [Campaign!]!
+
+  """Admin of the DAO"""
+  admin: User!
+
   """DAO admin address."""
   adminAddress: String!
 
@@ -242,6 +254,9 @@ type Dao {
 
   """Url to the Background Picture for the DAO."""
   backgroundPicture: String!
+
+  """DAO Id on the Smart Contract"""
+  blockchainDaoId: String!
 
   """Description of the DAO."""
   description: String!
@@ -337,6 +352,7 @@ type Query {
   categories: [Category!]!
   categoryById(id: String!): Category!
   contract(id: String!): Contract!
+  contractByAddress(address: String!): Contract!
   contracts: [Contract!]!
   daoById(id: String!): Dao
   daos: [Dao!]!
@@ -482,6 +498,9 @@ input UpdateContractInput {
 input UpdateDaoInput {
   """Url to the Background Picture for the DAO."""
   backgroundPicture: String
+
+  """DAO Id on the Smart Contract"""
+  blockchainDaoId: String
 
   """Description of the DAO."""
   description: String

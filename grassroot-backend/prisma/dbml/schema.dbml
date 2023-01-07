@@ -8,6 +8,7 @@ Table DAO {
   updatedAt DateTime [not null]
   name String [not null]
   description String [not null]
+  blockchainDaoId String [not null, default: 'not_set']
   adminAddress String [not null]
   adminId String [not null]
   admin User

@@ -28,6 +28,11 @@ export class ContractsResolver {
     return this.contractsService.findOne(id);
   }
 
+  @Query(() => Contract, { name: 'contractByAddress' })
+  findByAddress(@Args('address', { type: () => String }) address: string) {
+    return this.contractsService.findOneByAddress(address);
+  }
+
   @Mutation(() => Contract)
   @UseGuards(GqlAdminAuthGuard)
   updateContract(
