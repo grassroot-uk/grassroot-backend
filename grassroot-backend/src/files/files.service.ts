@@ -5,6 +5,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
+import { User } from 'src/users/models/user.model';
 import { Web3Service } from 'src/web3/web3.service';
 import { Blob, File } from 'web3.storage';
 import { CreateFileDto } from './dto/create-file.dto';
@@ -19,7 +20,8 @@ export class FilesService {
 
   async createAndUpload(
     createFileDto: CreateFileDto,
-    file: Express.Multer.File
+    file: Express.Multer.File,
+    user: User
   ) {
     let requestMetadata;
     try {
@@ -60,14 +62,16 @@ export class FilesService {
         metadataCid: metadataCid,
         imageCid: imageCid,
         metadata: metadataJSON,
+        owner: {
+          connect: {
+            id: user.id,
+          },
+        },
       },
     });
   }
 
-  async UploadOne(
-    file: Express.Multer.File
-  ) {
-    
+  async UploadOne(file: Express.Multer.File, user: User) {
     const uploadFile = new File([file.buffer], file.originalname, {
       type: file.mimetype,
     });
@@ -82,15 +86,17 @@ export class FilesService {
         resolver: DEFAULT_RESOLVER,
         imageUrl: `https://${imageCid}.${DEFAULT_RESOLVER}/${file.originalname}`,
         uploadedIPFS: true,
-        imageCid: imageCid
+        imageCid: imageCid,
+        owner: {
+          connect: {
+            id: user.id,
+          },
+        },
       },
     });
   }
 
-  async UploadOneFile(
-    file: Express.Multer.File
-  ) {
-    
+  async UploadOneFile(file: Express.Multer.File, user: User) {
     const uploadFile = new File([file.buffer], file.originalname, {
       type: file.mimetype,
     });
@@ -105,17 +111,76 @@ export class FilesService {
         resolver: DEFAULT_RESOLVER,
         metadataUrl: `https://${cid}.${DEFAULT_RESOLVER}/${file.originalname}`,
         uploadedIPFS: true,
-        metadataCid: cid
+        metadataCid: cid,
+        owner: {
+          connect: {
+            id: user.id,
+          },
+        },
       },
     });
   }
 
+  async UploadManyImage(files: Express.Multer.File[], user: User) {
+    const cids = files.map((file) =>
+      this.web3Service.uploadFile(
+        new File([file.buffer], file.originalname, { type: file.mimetype })
+      )
+    );
+
+    const uploadedCids = await Promise.all(cids);
+    const DEFAULT_RESOLVER = 'ipfs.w3s.link';
+
+    await this.prisma.file.createMany({
+      data: uploadedCids.map((imageCid, index) => {
+        const file = files[index];
+        return {
+          name: file.originalname,
+          resolver: DEFAULT_RESOLVER,
+          imageUrl: `https://${imageCid}.${DEFAULT_RESOLVER}/${file.originalname}`,
+          uploadedIPFS: true,
+          imageCid: imageCid,
+          ownerId: user.id,
+        };
+      }),
+    });
+
+    return Promise.all(uploadedCids.map((cid) => this.findCid(cid, 'image')));
+  }
+
   findAll() {
-    return this.prisma.file.findMany();
+    return this.prisma.file.findMany({
+      include: {
+        owner: true,
+      },
+    });
   }
 
   findOne(id: string) {
-    return this.prisma.file.findFirst({ where: { id: id } });
+    return this.prisma.file.findFirst({
+      where: { id: id },
+      include: {
+        owner: true,
+      },
+    });
+  }
+
+  async findCid(cid: string, type: 'image' | 'metadata') {
+    if (type === 'image') {
+      return this.prisma.file.findFirst({
+        where: { imageCid: cid },
+        include: {
+          owner: true,
+        },
+      });
+    } else {
+      return this.prisma.file.findFirst({
+        where: { metadataCid: cid },
+        include: {
+          owner: true,
+        },
+      });
+    }
   }
 
   update(id: string, updateFileDto: UpdateFileDto) {
