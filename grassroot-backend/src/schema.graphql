@@ -544,7 +544,7 @@ type User {
 
   """Identifies the date and time when the object was created."""
   createdAt: DateTime!
-  email: String!
+  email: String
   files: [File!]
   firstname: String
   id: ID!

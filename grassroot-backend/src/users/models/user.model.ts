@@ -17,7 +17,7 @@ registerEnumType(Role, {
 
 @ObjectType()
 export class User extends BaseModel {
-  @Field()
+  @Field({nullable: true})
   @IsEmail()
   email: string;
 
